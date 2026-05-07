@@ -42,29 +42,29 @@ async ResetButtonClick(){
 
 async SearchHotel(
     location:string,
-    hotels:string,
-    RoomType:string,
+    hotels?:string, //? makes the field optional
+    RoomType?:string,
     RoomNos:string,
     Checkin:string,
     Checkout:string,
     Adultsno:string,
-    childrenno:string
+    childrenno?:string
 
 
 
 ){
 
     await this.location_dropdown.selectOption({ label:location});
-    await this.Hotels_dropdown.selectOption({label:hotels});
-    await this.RoomType_dropdown.selectOption({label:RoomType});
+    if (hotels) await this.Hotels_dropdown.selectOption({label:hotels});
+    if (RoomType) await this.RoomType_dropdown.selectOption({label:RoomType});
     await this.NoOfRooms_dropdown.selectOption({label:RoomNos});
     
     await this.CheckIn_date.fill(Checkin);
     await this.CheckIn_date.pressSequentially(Checkin); //types the checkin date charrater like a real user
     await this.CheckOut_date.fill(Checkout);
-    await this.CheckIn_date.pressSequentially(Checkout);
+    await this.CheckOut_date.pressSequentially(Checkout);
     await this.AdultsPerRoom_dropdown.selectOption({label:Adultsno});
-    await this.ChildPerRoom_dropdown.selectOption({label:childrenno});
+    if(childrenno) await this.ChildPerRoom_dropdown.selectOption({label:childrenno});
 }
 
 

@@ -19,133 +19,186 @@ test.describe("Search Page Tests", () => {
         await login.gotoLoginPage();
         await login.login('Ramya2507', '123456');
 
-    }); 
+    });
+    const searchData = [
+        { location: 'Sydney', hotels: 'Hotel Creek', RoomType: 'Standard', RoomNos: '1 - One',RoomsNosDisplay:'1', Checkin: '17/07/2026', Checkout: '20/07/2026', Adultsno: '1 - One', childrenno: '1 - One' },
+        { location: 'Melbourne', hotels: 'Hotel Sunshine', RoomType: 'Double', RoomNos: '6 - Six', RoomsNosDisplay:'6', Checkin: '17/07/2026', Checkout: '20/07/2026', Adultsno: '4 - Four', childrenno: '4 - Four' }
+    ]
+    for (const data of searchData) {
+        test(`Validate with valid details - ${data.location}`, async ({ page }) => {
+
+            // const location = 'Sydney';
+            // const hotels = 'Hotel Creek';
+            // const RoomType = 'Standard';
+            // const RoomNos = '1 - One';
+            // const Checkin = '17/07/2026';
+            // const Checkout = '20/07/2026';
+            // const Adultsno = '1 - One';
+            // const childrenno = '1 - One';
+
+            // console.log('Room nos:', await search.NoOfRooms_dropdown.locator('option').allTextContents());
+            // console.log('Adults', await search.AdultsPerRoom_dropdown.locator('option').allTextContents());
+            // console.log('Chlildren/room:' ,await search.ChildPerRoom_dropdown.locator('option').allTextContents());
+            // console.log('Room Type:' ,await search.RoomType_dropdown.locator('option').allTextContents());
+            // console.log('Hotels:' ,await search.Hotels_dropdown.locator('option').allTextContents());
+            // console.log('Location:', await search.location_dropdown.locator('option').allTextContents());
+
+            await search.SearchHotel(
+                data.location,
+                data.hotels,
+                data.RoomType,
+                data.RoomNos,
+                data.Checkin,
+                data.Checkout,
+                data.Adultsno,
+                data.childrenno);
+
+            await search.SearchButtonClick();
+            await expect(page).toHaveTitle(/Select Hotel/);
+            //const locationCells = await select.Location.all()
+            const fieldsToValidate = [
+                { cells: select.Location, expected: data.location },
+                { cells: select.HotelName, expected: data.hotels },
+                { cells: select.roomtype, expected: data.RoomType },
+                { cells: select.Rooms, expected: data.RoomsNosDisplay },
+                { cells: select.arrdate, expected: data.Checkin },
+                { cells: select.depdate, expected: data.Checkout },
+
+            ]
+            for (const cell of fieldsToValidate) {
+                const cells = await cell.cells.all();
+                for (const input of cells) {
+                    const value = await input.inputValue();
+                    expect(value).toContain(cell.expected);
+                }
 
 
-    test("Validate with valid details", async ({ page }) => {
 
-        const location = 'Sydney';
-        const hotels = 'Hotel Creek';
-        const RoomType = 'Standard';
-        const RoomNos = '1 - One';
-        const Checkin = '17/07/2026';
-        const Checkout = '20/07/2026';
-        const Adultsno = '1 - One';
-        const childrenno = '1 - One';
-
-        // console.log('Room nos:', await search.NoOfRooms_dropdown.locator('option').allTextContents());
-        // console.log('Adults', await search.AdultsPerRoom_dropdown.locator('option').allTextContents());
-        // console.log('Chlildren/room:' ,await search.ChildPerRoom_dropdown.locator('option').allTextContents());
-        // console.log('Room Type:' ,await search.RoomType_dropdown.locator('option').allTextContents());
-        // console.log('Hotels:' ,await search.Hotels_dropdown.locator('option').allTextContents());
-        // console.log('Location:', await search.location_dropdown.locator('option').allTextContents());
-
-        await search.SearchHotel(
-            location,
-            hotels,
-            RoomType,
-            RoomNos,
-            Checkin,
-            Checkout,
-            Adultsno,
-            childrenno);
-
-        await search.SearchButtonClick();
-        await expect(page).toHaveTitle(/Select Hotel/);
-        const locationCells = await select.Location.all()
-        for (const cell of locationCells) {
-            const value = await cell.inputValue();
-            expect(value).toEqual(location);
-        }
-        
-        
-
-    }); //closes first scenario
+            }
 
 
-    test("Invalid date error message - past check in date", async ({ page }) => {
+        });//closes test
+    }  //closes loop
 
-        const location = 'Sydney';
-        const hotels = 'Hotel Creek';
-        const RoomType = 'Standard';
-        const RoomNos = '1 - One';
-        const Checkin = '17/02/2025';
-        const Checkout = '20/02/2025';
-        const Adultsno = '1 - One';
-        const childrenno = '1 - One';
 
-      
-        await search.SearchHotel(
-            location,
-            hotels,
-            RoomType,
-            RoomNos,
-            Checkin,
-            Checkout,
-            Adultsno,
-            childrenno);
+test("Invalid date error message - past check in date", async ({ page }) => {
 
-        await search.SearchButtonClick();
-        //await page.pause();
-        await page.waitForLoadState('domcontentloaded');
-        await expect(page.locator('#checkin_span')).toContainText("Check-In Date should be either Today or Later Date")
-      //await expect(page).toHaveTitle(/Select Hotel/);
-        
+    const location = 'Sydney';
+    const hotels = 'Hotel Creek';
+    const RoomType = 'Standard';
+    const RoomNos = '1 - One';
+    const Checkin = '17/02/2025';
+    const Checkout = '20/02/2025';
+    const Adultsno = '1 - One';
+    const childrenno = '1 - One';
+
+
+    await search.SearchHotel(
+        location,
+        hotels,
+        RoomType,
+        RoomNos,
+        Checkin,
+        Checkout,
+        Adultsno,
+        childrenno);
+
+    await search.SearchButtonClick();
+    //await page.pause();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('#checkin_span')).toContainText("Check-In Date should be either Today or Later Date")
+    //await expect(page).toHaveTitle(/Select Hotel/);
+
 });
 
 test("Invalid date error message - past check out date", async ({ page }) => {
 
-        const location = 'Sydney';
-        const hotels = 'Hotel Creek';
-        const RoomType = 'Standard';
-        const RoomNos = '1 - One';
-        const Checkin = '17/09/2026';
-        const Checkout = '20/02/2025';
-        const Adultsno = '1 - One';
-        const childrenno = '1 - One';
+    const location = 'Sydney';
+    const hotels = 'Hotel Creek';
+    const RoomType = 'Standard';
+    const RoomNos = '1 - One';
+    const Checkin = '17/09/2026';
+    const Checkout = '20/02/2025';
+    const Adultsno = '1 - One';
+    const childrenno = '1 - One';
 
-      
-        await search.SearchHotel(
-            location,
-            hotels,
-            RoomType,
-            RoomNos,
-            Checkin,
-            Checkout,
-            Adultsno,
-            childrenno);
 
-        await search.SearchButtonClick();
-        //await page.pause();
-        await page.waitForLoadState('domcontentloaded');
-        await expect(page.locator('#checkin_span')).toContainText("Check-In Date shall be before than Check-Out Date");
-        await expect(page.locator('#checkout_span')).toContainText("Check-Out Date shall be after than Check-In Date");
-      //await expect(page).toHaveTitle(/Select Hotel/);
-        
+    await search.SearchHotel(
+        location,
+        hotels,
+        RoomType,
+        RoomNos,
+        Checkin,
+        Checkout,
+        Adultsno,
+        childrenno);
+
+    await search.SearchButtonClick();
+    //await page.pause();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('#checkin_span')).toContainText("Check-In Date shall be before than Check-Out Date");
+    await expect(page.locator('#checkout_span')).toContainText("Check-Out Date shall be after than Check-In Date");
+    //await expect(page).toHaveTitle(/Select Hotel/);
+
 });
-test("Only mandatory fields input", async ({ page }) => {
+const mandatoryData = [
+    { location: 'Brisbane', hotels: undefined, RoomType: undefined, RoomNos: '10 - Ten',RoomsNosDisplay:'10', Checkin: '17/07/2026', Checkout: '20/07/2026', Adultsno: '4 - Four', childrenno: undefined },
+    { location: 'Adelaide', hotels: undefined, RoomType: undefined, RoomNos: '6 - Six', RoomsNosDisplay:'6',Checkin: '17/07/2026', Checkout: '20/07/2026', Adultsno: '4 - Four', childrenno: undefined }
+]
+for (const data of mandatoryData) {
+    test(`Only mandatory fields input - ${data.location}`, async ({ page }) => {
 
-        const location = 'Sydney';
-        
+        // const location = 'Melbourne';
+        // undefined;
+        // undefined;
+        // const RoomNos = '10 - Ten';
+        // const Checkin = '17/07/2026';
+        // const Checkout = '20/09/2026';
+        // const Adultsno = '4 - Four';
+        // undefined;
 
-      
+
+
         await search.SearchHotel(
-            location
-            );
+            data.location,
+            data.hotels,
+            data.RoomType,
+            data.RoomNos,
+            data.Checkin,
+            data.Checkout,
+            data.Adultsno,
+            data.childrenno
+        );
 
         await search.SearchButtonClick();
         await expect(page).toHaveTitle(/Select Hotel/);
-        const locationCells = await select.Location.all()
-        for (const cell of locationCells) {
-            const value = await cell.inputValue();
-            expect(value).toEqual(location);
-        }
-        
-        
+        //const locationCells = await select.Location.all()
+        const fieldsToValidate = [
+                { cells: select.Location, expected: data.location },
+                //{ cells: select.HotelName, expected: data.hotels },
+                //{ cells: select.roomtype, expected: data.RoomType },
+                { cells: select.Rooms, expected: data.RoomsNosDisplay },
+                { cells: select.arrdate, expected: data.Checkin },
+                { cells: select.depdate, expected: data.Checkout },
+
+            ]
+            for (const cell of fieldsToValidate) {
+                const cells = await cell.cells.all();
+                for (const input of cells) {
+                    const value = await input.inputValue();
+                    expect(value).toContain(cell.expected);
+                }
+
+
+
+            }
+
+
+    });
+    }
 });
-});
-        
-        
+
+
 
 
 

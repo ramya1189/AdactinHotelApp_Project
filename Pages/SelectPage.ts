@@ -12,6 +12,8 @@ export class SelectPage{
     depdate: Locator;
     nodays: Locator;
     roomtype: Locator;
+    checkout: Locator;
+    checkin: Locator;
 
 
 
@@ -30,6 +32,7 @@ export class SelectPage{
         this.depdate=page.locator("[id^='dep_date_']")
         this.nodays=page.locator("[id^='no_days_']")
         this.roomtype=page.locator("[id^='room_type_']")
+        
         
 
     }
