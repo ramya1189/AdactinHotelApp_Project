@@ -12,8 +12,8 @@ export class SelectPage{
     depdate: Locator;
     nodays: Locator;
     roomtype: Locator;
-    checkout: Locator;
-    checkin: Locator;
+    pricepernight: Locator;
+    totalprice: Locator;
 
 
 
@@ -32,6 +32,8 @@ export class SelectPage{
         this.depdate=page.locator("[id^='dep_date_']")
         this.nodays=page.locator("[id^='no_days_']")
         this.roomtype=page.locator("[id^='room_type_']")
+        this.pricepernight=page.locator("[id^='price_night']")
+        this.totalprice=page.locator("[id^='total_price_']")
         
         
 

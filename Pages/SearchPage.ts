@@ -53,7 +53,7 @@ async SearchHotel(
 
 
 ){
-
+    await this.page.waitForLoadState('domcontentloaded');
     await this.location_dropdown.selectOption({ label:location});
     if (hotels) await this.Hotels_dropdown.selectOption({label:hotels});
     if (RoomType) await this.RoomType_dropdown.selectOption({label:RoomType});

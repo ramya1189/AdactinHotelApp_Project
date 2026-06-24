@@ -17,7 +17,7 @@ test.describe("Search Page Tests", () => {
         select = new SelectPage(page);
 
         await login.gotoLoginPage();
-        await login.login('Ramya2507', '123456');
+        await login.login('Anita1234', '123456');
 
     });
     const searchData = [
@@ -87,8 +87,8 @@ test("Invalid date error message - past check in date", async ({ page }) => {
     const hotels = 'Hotel Creek';
     const RoomType = 'Standard';
     const RoomNos = '1 - One';
-    const Checkin = '17/02/2025';
-    const Checkout = '20/02/2025';
+    const Checkin = '17/02/2026';
+    const Checkout = '20/07/2026';
     const Adultsno = '1 - One';
     const childrenno = '1 - One';
 
