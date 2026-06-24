@@ -1,17 +1,17 @@
 # Sample Project_AdactinHotelApp
 Automates key scenarios across all modules of the Adactin Project.
 
-Login 
-Search hotel
-Select Hotel
-Payment
-Booking history 
+- Login
+- Search Hotel
+- Select Hotel
+- Payment
+- Booking History
 
 ## Tech Stack
-    Playwright
-    TypeScript
-    POM pattern
-    Node.js
+- Playwright
+- TypeScript
+- Page Object Model (POM)
+- Node.js
 
 ## Test Coverage
  Login Test: 
@@ -27,14 +27,17 @@ Booking history
 
 Search Test
 
-1. Validate with valid details
+1. Validate with valid details - using data driven method , passed 2 different data set to run the test, and validate the select page table with search criteria input.
 2. Invalid date error message - past check in date
 3. Invalid date error message - past check out date
-4. Only location input - validate all rows displayed with search criteria
-5. Verify price calculation
+4. Only mandatory data input - using data driven method , passed 2 different data set only for mandatory fields to run the test, and validate the select page table with search criteria input.
+
+Select Page:
+1. Validate the Select table prices column. - 🔄 In Progress
 
 
 ## Status
-✅ Completed: Login Page, Forgot Password Page, New User Registration Page
-🔄 In Progress: Search Page (3/5 scenarios done), Select Page (locators built)
+✅ Completed: Login Page, Forgot Password Page, New User Registration Page.
+✅ Completed: Search Page tests - 6 scenarios , 2 data driven
+🔄 In Progress:Select Page
 📋 Planned: Payment Page, Booking History
