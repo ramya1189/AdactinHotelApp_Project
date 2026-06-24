@@ -41,4 +41,4 @@ Select Page:
 ✅ Completed: Login Page, Forgot Password Page, New User Registration Page.
 ✅ Completed: Search Page tests - 6 scenarios , 2 data driven
 ✅ Completed:Select Page
-🔄 Planned: Payment Page, Booking History
+🔄 In Progress: Payment Page, Booking History
