@@ -33,11 +33,12 @@ Search Test
 4. Only mandatory data input - using data driven method , passed 2 different data set only for mandatory fields to run the test, and validate the select page table with search criteria input.
 
 Select Page:
-1. Validate the Select table prices column. - 🔄 In Progress
+1. Validate the Select table price per night , room nos , no . of days , and total price for different test data combinations.
+2. Test data - location : Birsbane ; Room nos:6 , NoOfDays:1,2,5,10,30.
 
 
 ## Status
 ✅ Completed: Login Page, Forgot Password Page, New User Registration Page.
 ✅ Completed: Search Page tests - 6 scenarios , 2 data driven
-🔄 In Progress:Select Page
-📋 Planned: Payment Page, Booking History
+✅ Completed:Select Page
+🔄 Planned: Payment Page, Booking History
